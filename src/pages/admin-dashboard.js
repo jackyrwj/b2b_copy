@@ -1011,7 +1011,7 @@ export async function adminDashboard(env) {
           // Debug: Show count on page
           const debugInfo = document.createElement('div');
           debugInfo.style.cssText = 'background: #f0f0f0; padding: 0.5rem; margin-bottom: 1rem; border-radius: 4px; font-size: 14px;';
-          debugInfo.textContent = `DEBUG: Received ${inquiries.length} inquiries from API`;
+          debugInfo.textContent = 'DEBUG: Received ' + inquiries.length + ' inquiries from API';
 
           const container = document.getElementById('inquiries-list');
           container.innerHTML = '';
