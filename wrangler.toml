@@ -1,0 +1,16 @@
+name = "cf-b2b-website_copy"
+main = "src/index.js"
+compatibility_date = "2025-01-01"
+compatibility_flags = ["nodejs_compat"]
+
+# Environment variables
+[vars]
+ENVIRONMENT = "development"
+# WARNING: Never commit secrets to git! Use wrangler secret put for sensitive values
+# Example: wrangler secret put NEON_DATABASE_URL
+
+# The following variables must be set via wrangler secret put command:
+# - NEON_DATABASE_URL (required): Your Neon PostgreSQL connection string
+# - SUPABASE_URL (optional): For Supabase Storage if still using it
+# - SUPABASE_ANON_KEY (optional): For Supabase Storage
+# - SUPABASE_SERVICE_KEY (optional): For Supabase Storage admin operations
