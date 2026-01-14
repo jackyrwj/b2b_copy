@@ -6,11 +6,14 @@ compatibility_flags = ["nodejs_compat"]
 # Environment variables
 [vars]
 ENVIRONMENT = "development"
-# WARNING: Never commit secrets to git! Use wrangler secret put for sensitive values
-# Example: wrangler secret put NEON_DATABASE_URL
+NEON_DATABASE_URL = "postgresql://neondb_owner:npg_T8CV0FOqpBvQ@ep-fancy-rice-ae4e8ail-pooler.c-2.us-east-2.aws.neon.tech/neondb?channel_binding=require&sslmode=require"
 
-# The following variables must be set via wrangler secret put command:
-# - NEON_DATABASE_URL (required): Your Neon PostgreSQL connection string
-# - SUPABASE_URL (optional): For Supabase Storage if still using it
-# - SUPABASE_ANON_KEY (optional): For Supabase Storage
-# - SUPABASE_SERVICE_KEY (optional): For Supabase Storage admin operations
+# Supabase configuration (kept for legacy, will be removed after migration)
+SUPABASE_URL = "https://fzdsmhhvevtsbvxikcne.supabase.co"
+SUPABASE_ANON_KEY = "sb_publishable_5FTHPoS9fGOArNX9DkyJ7A__ToMSxqO"
+SUPABASE_SERVICE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZ6ZHNtaGh2ZXZ0c2J2eGlrY25lIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc2ODI0Mzk1NSwiZXhwIjoyMDgzODE5OTU1fQ.6PYGWsvvilGhm_gDy0mdAc1JaLQXFgqMeoXE1tUNn5M"
+
+# R2 Storage bindings
+[[r2_buckets]]
+binding = "IMAGES"
+bucket_name = "b2b-product-images"

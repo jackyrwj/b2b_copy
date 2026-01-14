@@ -1,9 +1,9 @@
 /**
  * Upload API Handler
- * Handles file uploads to Supabase Storage
+ * Handles file uploads to Cloudflare R2 Storage
  */
 
-import { uploadImage } from '../../utils/neon';
+import { uploadImage as uploadToR2 } from '../../utils/r2.js';
 import { requireSuperAdmin } from './admin';
 
 export async function handleUpload(request, env, corsHeaders) {
@@ -22,7 +22,7 @@ export async function handleUpload(request, env, corsHeaders) {
   });
 }
 
-// Upload image to Supabase Storage
+// Upload image to R2 Storage
 async function uploadImageHandler(request, env, corsHeaders) {
   try {
     // Check if user is super admin
@@ -38,6 +38,7 @@ async function uploadImageHandler(request, env, corsHeaders) {
 
     const formData = await request.formData();
     const file = formData.get('file');
+    const folder = formData.get('folder') || 'products';
 
     if (!file) {
       return new Response(JSON.stringify({ error: 'No file provided' }), {
@@ -68,12 +69,20 @@ async function uploadImageHandler(request, env, corsHeaders) {
       });
     }
 
-    // Upload to Supabase Storage
-    const result = await uploadImage(env, file, 'products');
+    // Generate unique filename
+    const timestamp = Date.now();
+    const random = Math.random().toString(36).substring(2, 8);
+    const extension = file.name.split('.').pop();
+    const filename = `${timestamp}-${random}.${extension}`;
+
+    // Upload to R2 Storage
+    const imageUrl = await uploadToR2(env, file, filename, folder);
 
     return new Response(JSON.stringify({
       success: true,
-      data: result,
+      url: imageUrl,
+      filename: filename,
+      path: `${folder}/${filename}`,
     }), {
       status: 201,
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },

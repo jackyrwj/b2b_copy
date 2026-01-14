@@ -1087,12 +1087,13 @@ export async function adminDashboard(env) {
         const result = await response.json();
 
         if (result.success) {
-          // Set the image URL
-          document.getElementById('product-image-url').value = result.data.url;
+          // Set the image URL (R2 API returns url directly, not in data object)
+          const imageUrl = result.url || result.data?.url || '';
+          document.getElementById('product-image-url').value = imageUrl;
 
           // Show preview
           const preview = document.getElementById('image-preview');
-          preview.innerHTML = \`<img src="\${result.data.url}" alt="Product preview">\`;
+          preview.innerHTML = \`<img src="\${imageUrl}" alt="Product preview">\`;
 
           showNotification('Image uploaded successfully', 'success');
         } else {

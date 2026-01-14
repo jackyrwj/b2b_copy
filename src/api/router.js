@@ -50,6 +50,12 @@ export async function handleApiRequest(request, env) {
       return handleAdmin(request, env, corsHeaders);
     }
 
+    // Images API (R2 storage)
+    if (path.startsWith('/api/images')) {
+      const { handleImages } = await import('./handlers/images');
+      return handleImages(request, env, corsHeaders);
+    }
+
     // 404 Not Found
     return new Response(JSON.stringify({ error: 'API endpoint not found' }), {
       status: 404,
