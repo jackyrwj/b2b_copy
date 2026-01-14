@@ -126,7 +126,8 @@ async function getInquiry(env, inquiryId, corsHeaders) {
   try {
     // Get all inquiries to find the specific one
     const inquiries = await getInquiries(env);
-    const inquiry = inquiries.find(i => i.id === parseInt(inquiryId));
+    // Database returns ID as string, so we need to compare properly
+    const inquiry = inquiries.find(i => parseInt(i.id) === parseInt(inquiryId));
 
     if (!inquiry) {
       return new Response(JSON.stringify({ error: 'Inquiry not found' }), {
