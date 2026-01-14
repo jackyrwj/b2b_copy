@@ -124,7 +124,8 @@ async function getAllInquiries(request, env, corsHeaders) {
 // Get single inquiry (Admin only)
 async function getInquiry(env, inquiryId, corsHeaders) {
   try {
-    const inquiries = await getInquiries(env, { limit: 1 });
+    // Get all inquiries to find the specific one
+    const inquiries = await getInquiries(env);
     const inquiry = inquiries.find(i => i.id === parseInt(inquiryId));
 
     if (!inquiry) {
